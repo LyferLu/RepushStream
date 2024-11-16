@@ -53,6 +53,13 @@ def try_to_push_live_stream():
             time.sleep(30)
             continue
 
+        # if the channel is upcoming but one day late, it means the channel is not live streaming, sleep 30 minutes and reset the youtube_live_url
+        if schedule_start_time and add_one_day(schedule_start_time) < get_bj_time():
+            print(f"{get_bj_time()}: The channel is upcoming but late too much, reset the youtube_live_url.")
+            youtube_live_url = None
+            schedule_start_time = None
+            time.sleep(30 * 60)
+            continue
         # if the live stream is upcoming and started, try to repush youtube and twitch
         push_result = try_to_push_youtube(youtube_live_url) and try_to_push_twitch()
         if push_result == 0:

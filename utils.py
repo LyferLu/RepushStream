@@ -1,9 +1,9 @@
 import googleapiclient.discovery
 import googleapiclient.errors
+import datetime
 
 
 def get_bj_time():
-    import datetime
     from dateutil import tz
 
     # 获取当前UTC时间
@@ -131,5 +131,7 @@ def try_to_push_twitch():
 
 
 def transform_to_time_object(time_str):
-    import datetime
     return datetime.datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S%z')
+
+def add_one_day(time):
+    return time + datetime.timedelta(days=1)
